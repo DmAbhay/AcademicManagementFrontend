@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext"; // import the hook
 
-export default function CoursePage() {
+export default function AdminCoursePage() {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -69,7 +69,7 @@ export default function CoursePage() {
       };
 
       await axios.post("http://localhost:8080/api/admin/course", payload, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setNewCourse({
         courseCode: "",
@@ -123,7 +123,7 @@ export default function CoursePage() {
       
 
       await axios.put("http://localhost:8080/api/admin/course", payload, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setEditCourseCode(null);
       setEditCourseData({
@@ -144,7 +144,7 @@ export default function CoursePage() {
     if (!window.confirm("Are you sure to delete this course?")) return;
     try {
       await axios.delete(`http://localhost:8080/api/admin/course/${courseCode}`, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
       fetchCourses();
       setError("");
